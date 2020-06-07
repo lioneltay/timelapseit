@@ -4,22 +4,21 @@ function App() {
   const cameraView = React.useRef<HTMLVideoElement>()
   const cameraSensor = React.useRef<HTMLCanvasElement>()
   const cameraOutput = React.useRef<HTMLImageElement>()
+  const mediaRef = React.useRef<MediaStream>()
 
   React.useEffect(() => {
     async function go() {
-      const stream = await navigator.mediaDevices.getUserMedia({
+      mediaRef.current = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: "environment" },
         audio: false,
       })
-
-      console.log(stream)
-
-      if (cameraView.current) {
-        cameraView.current.srcObject = stream
-      }
     }
 
     go()
+
+    if (cameraView.current && mediaRef.current) {
+      cameraView.current.srcObject = mediaRef.current
+    }
   })
 
   return (
@@ -31,22 +30,36 @@ function App() {
       <img ref={cameraOutput} />
 
       <button
-        onClick={() => {
-          if (
-            cameraSensor.current &&
-            cameraView.current &&
-            cameraOutput.current
-          ) {
-            cameraSensor.current.width = cameraView.current.videoWidth
-            cameraSensor.current.height = cameraView.current.videoHeight
-            cameraSensor.current
-              .getContext("2d")
-              ?.drawImage(cameraView.current, 0, 0)
-            console.log("blob", cameraSensor.current.toBlob())
-            cameraOutput.current.src = cameraSensor.current.toDataURL(
-              "image/webp",
-            )
+        onClick={async () => {
+          const mediaStream = mediaRef.current
+          const img = cameraOutput.current
+          if (mediaStream && img) {
+            const mediaStreamTrack = mediaStream.getVideoTracks()[0]
+            console.log("@@@@@@@@@", mediaStreamTrack.getCapabilities())
+            const imageCapture = new ImageCapture(mediaStreamTrack)
+            console.log("$$$$$$$$$", await imageCapture.getPhotoSettings())
+            const blob = await imageCapture.takePhoto()
+            img.src = URL.createObjectURL(blob)
+            img.onload = () => {
+              URL.revokeObjectURL(this.src)
+            }
           }
+
+          // if (
+          //   cameraSensor.current &&
+          //   cameraView.current &&
+          //   cameraOutput.current
+          // ) {
+          //   cameraSensor.current.width = cameraView.current.videoWidth
+          //   cameraSensor.current.height = cameraView.current.videoHeight
+          //   cameraSensor.current
+          //     .getContext("2d")
+          //     ?.drawImage(cameraView.current, 0, 0)
+          //   console.log("blob", cameraSensor.current.toBlob())
+          //   cameraOutput.current.src = cameraSensor.current.toDataURL(
+          //     "image/webp",
+          //   )
+          // }
         }}
       >
         Take a picture
