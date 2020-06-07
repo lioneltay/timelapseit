@@ -23,6 +23,8 @@ function App() {
 
   return (
     <div>
+      <h1>TAKE PHOTO</h1>
+
       <video ref={cameraView} autoPlay playsInline />
 
       <canvas ref={cameraSensor} />
