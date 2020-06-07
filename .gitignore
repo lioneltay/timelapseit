@@ -4,7 +4,5 @@ node_modules
 dist/
 coverage/
 **/.DS_Store
-cypress/videos
-cypress/screenshots
 .firebase
 **debug.log

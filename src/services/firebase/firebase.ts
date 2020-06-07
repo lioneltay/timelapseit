@@ -24,8 +24,6 @@ if (isLocal) {
   firestore.settings({
     host: "localhost:8080",
     ssl: false,
-    // WORKAROUND: Cypress is intercepting requests causing functions to fail https://github.com/cypress-io/cypress/issues/6350
-    experimentalForceLongPolling: true,
   })
 
   firebase.functions().useFunctionsEmulator("http://localhost:5001")
