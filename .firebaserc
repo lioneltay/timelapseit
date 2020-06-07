@@ -1,7 +1,7 @@
 {
   "projects": {
-    "default": "timelapseit",
+    "default": "timelapseit-dev",
     "production": "timelapseit",
-    "staging": "timelapseit"
+    "staging": "timelapseit-dev"
   }
 }

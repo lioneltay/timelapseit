@@ -13,10 +13,7 @@ const babel_loader = {
 
 module.exports = {
   entry: {
-    main: [
-      relativeToRoot("./src/index.tsx"),
-      relativeToRoot("./src/service-worker/service.worker.ts"),
-    ],
+    main: [relativeToRoot("./src/index.tsx")],
   },
 
   resolve: {
