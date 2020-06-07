@@ -1,7 +1,7 @@
 {
   "projects": {
-    "default": "onyamind-staging",
-    "production": "tekktekk-notes",
-    "staging": "onyamind-staging"
+    "default": "timelapseit",
+    "production": "timelapseit",
+    "staging": "timelapseit"
   }
 }

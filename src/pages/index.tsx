@@ -20,13 +20,7 @@ export default () => {
         min-height: 100vh;
       `}
     >
-      <GlobalComponents />
-
-      <Switch>
-        <Route path="/profile" component={ProfilePage} />
-        <Route path="/lists/:listId?" component={ListPage} />
-        <Route>{() => <Redirect to="/lists" />}</Route>
-      </Switch>
+      <h1>Hello</h1>
     </div>
   )
 }
